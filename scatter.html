@@ -3,24 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Scatter Chart</title>
-  <!-- Google Charts Library -->
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-  <!-- 圖表容器 -->
   <div id="chart_div" style="width:800px; height:500px;"></div>
 
   <script>
-    // 1. 載入 corechart package
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-      // 2. 輸入你的 Spreadsheet ID 和 Sheet 名稱
+      // 修改為你的 Spreadsheet ID 和 Sheet 名稱
       const spreadsheetId = '1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w';
-      const sheetName = '泛用輸出'; // 改成你的工作表名稱
+      const sheetName = '泛用輸出'; 
 
-      // 3. 建立查詢 URL
       const query = new google.visualization.Query(
         `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?sheet=${sheetName}&range=B1:F`
       );
@@ -36,32 +32,5 @@
 
       const data = response.getDataTable();
 
-      // 只顯示 tooltip 與對應欄位
-      const view = new google.visualization.DataView(data);
-      view.setColumns([
-        2, // X 軸座標 (C欄)
-        3, // Y1 座標 (D欄)
-        { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,1)}` }, // tooltip
-        4, // Y2 座標 (E欄)
-        { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,1)}` }, 
-        5, // Y3 座標 (F欄)
-        { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,1)}` } 
-      ]);
-
-      // 4. 圖表設定 (先不設定顏色)
-      const options = {
-        title: 'Scatter Plot',
-        hAxis: { title: 'X' },
-        vAxis: { title: 'Y' },
-        legend: { position: 'right' }
-      };
-
-      // 5. 畫圖
-      const chart = new google.visualization.ScatterChart(
-        document.getElementById('chart_div')
-      );
-      chart.draw(view, options);
-    }
-  </script>
-</body>
-</html>
+      // DataView 設定 tooltip 和 X/Y 欄位
+      const view = new google.visualization.DataV
