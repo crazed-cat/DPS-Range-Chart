@@ -32,5 +32,30 @@
 
       const data = response.getDataTable();
 
+      // ✅ 檢查是否成功讀取資料
+      console.log(data.toJSON());
+
       // DataView 設定 tooltip 和 X/Y 欄位
-      const view = new google.visualization.DataV
+      const view = new google.visualization.DataView(data);
+      view.setColumns([
+        2, // X 軸 (C欄)
+        3, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }, // D欄 + tooltip
+        4, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }, // E欄 + tooltip
+        5, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }  // F欄 + tooltip
+      ]);
+
+      const options = {
+        title: 'Scatter Plot',
+        hAxis: { title: 'X' },
+        vAxis: { title: 'Y' },
+        legend: { position: 'right' }
+      };
+
+      const chart = new google.visualization.ScatterChart(
+        document.getElementById('chart_div')
+      );
+      chart.draw(view, options);
+    }
+  </script>
+</body>
+</html>
