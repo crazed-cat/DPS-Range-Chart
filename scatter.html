@@ -39,9 +39,9 @@
       const view = new google.visualization.DataView(data);
       view.setColumns([
         1, // X 軸 (C欄)
-        2, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }, // D欄 + tooltip
-        3, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }, // E欄 + tooltip
-        4, { type: 'string', role: 'tooltip', calc: (dt, row) => `Label: ${dt.getValue(row,0)}` }  // F欄 + tooltip
+        2, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` }, // D欄 + tooltip
+        3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` }, // E欄 + tooltip
+        4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` }  // F欄 + tooltip
       ]);
 
       const options = {
@@ -59,4 +59,5 @@
   </script>
 </body>
 </html>
+
 
