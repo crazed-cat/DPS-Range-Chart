@@ -48,7 +48,13 @@
         title: 'Scatter Plot',
         hAxis: { title: '射程(接觸點)' },
         vAxis: { title: 'DPS(秒平均輸出)' },
-        legend: { position: 'right' }
+        legend: { position: 'right' },
+
+        explorer: {
+          actions: ['dragToZoom', 'rightClickToReset'],
+          axis: 'both',
+          keepInBounds: true
+        }
       };
 
       const chart = new google.visualization.ScatterChart(
