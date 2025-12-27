@@ -6,7 +6,25 @@
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-  <div id="chart_div" style="width:800px; height:500px;"></div>
+  <div style="display: flex; gap: 24px; align-items: flex-start;">
+  <div id="chart_div" style="width:800px; height:800px;"></div>
+
+  <div id="note_box" style="
+    width: 260px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-left: 3px solid #ccc;
+    padding-left: 16px;
+  ">
+    每個點代表一角色<br>
+    使用滑鼠滾輪或拖曳左鍵可放大/縮小<br>
+    右鍵可重置縮放倍率<br>
+    <br>
+    會升攻的貓以升攻前後加權平均計算<br>
+    權重正比於攻擊力*對應KB數<br>
+    其中死前存活會視為0.5個KB<br>
+  </div>
+</div>
 
   <script>
     google.charts.load('current', { packages: ['corechart'] });
@@ -53,7 +71,7 @@
         height: 800,
 
         explorer: {
-          actions: ['dragToZoom', 'rightClickToReset'],
+          actions: ['dragToZoom','scrollToZoom','rightClickToReset'],
           axis: 'both',
           keepInBounds: true
         }
@@ -67,6 +85,7 @@
   </script>
 </body>
 </html>
+
 
 
 
