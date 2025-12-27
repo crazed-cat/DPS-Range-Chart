@@ -17,7 +17,7 @@
     padding-left: 16px;
   ">
     每個點代表一角色<br>
-    使用滑鼠滾輪與左鍵可放大/縮小<br>
+    使用左鍵拖曳可放大/縮小<br>
     右鍵可重置縮放倍率<br>
     <br>
     會升攻的貓以升攻前後加權平均計算<br>
@@ -71,11 +71,7 @@
         height: 800,
 
         explorer: {
-          actions: [
-          'scrollToZoom',
-          'dragToPan',
-          'rightClickToReset'
-        ],
+          actions: ['dragToZoom','rightClickToReset'],
         axis: 'both',
         keepInBounds: true,
         maxZoomIn: 0.02
@@ -90,6 +86,7 @@
   </script>
 </body>
 </html>
+
 
 
 
