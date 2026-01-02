@@ -33,8 +33,24 @@
     <input type="checkbox" id="metaOnly">隱藏數值較低的角色
   </label>
 
-  <div id="chart_div" style="width:700px; height:900px;"></div>
+  <div id="chart_div" style="width:800px; height:800px;"></div>
 
+  <div id="note_box" style="
+    width: 260px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-left: 3px solid #ccc;
+    padding-left: 16px;
+  ">
+    每個點代表一隻角色<br>
+    使用滑鼠滾輪可以縮放<br>
+    右鍵可重置縮放倍率<br>
+    <br>
+    會升攻的貓以升攻前後加權平均計算<br>
+    權重正比於攻擊力*對應KB數<br>
+    其中死前存活會視為0.5個KB<br>
+  </div>
 </body>
 
 </html>
+
