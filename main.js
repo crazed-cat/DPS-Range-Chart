@@ -76,7 +76,7 @@ function init() {
       chart.draw(view, options);
     })
 
-  alert(view)
+  alert(view[0])
   applyFilter();
   chart.draw(view, options);
 }
@@ -124,6 +124,7 @@ function loadTable(key) {
     ]);
   });
 }
+
 
 
 
