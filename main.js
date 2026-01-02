@@ -40,11 +40,11 @@ function init() {
 
   document
     .getElementById('metaOnly')
-    .addEventListener('change', loadTable())
+    .addEventListener('change', loadTable());
 
   document
     .getElementById('traitSelector')
-    .addEventListener('change',loadTable())
+    .addEventListener('change',loadTable());
  
   loadTable()
 }
@@ -89,6 +89,7 @@ function loadTable() {
   chart.draw(view, options);
   });
 }
+
 
 
 
