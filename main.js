@@ -72,7 +72,7 @@ function applyFilter() {
   const rows = [];
 
   for (let i = 0; i < data.getNumberOfRows(); i++) {
-    if (data.getValue(i, 5) >= filter) {
+    if (data.getValue(i, 6) >= filter) {
       rows.push(i);
     }
   }
@@ -94,11 +94,12 @@ function loadTable(key) {
     data = response.getDataTable();
     view = new google.visualization.DataView(data);
     view.setColumns([
-      1, // X
-      2, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` },
-      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` },
-      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` }
+      2, // X
+      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
   });
 }
+
 
