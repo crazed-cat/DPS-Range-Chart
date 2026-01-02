@@ -20,7 +20,6 @@ function init() {
     hAxis: { title: '射程(接觸點)' },
     vAxis: { title: 'DPS(秒平均輸出)', logScale:'false' },
     legend: { position: 'top' },
-    height: 700,
     explorer: {
       actions: ['scrollToZoom', 'dragToPan', 'rightClickToReset'],
       axis: 'both',
@@ -90,6 +89,7 @@ function loadTable() {
   chart.draw(view, options);
   });
 }
+
 
 
 
