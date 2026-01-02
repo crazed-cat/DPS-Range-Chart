@@ -14,7 +14,26 @@ let options;
 
 function init() {
   //alert(dataset['none'])
-  loadTable('none')
+  const query = new google.visualization.Query(
+    `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=0`
+  );
+  
+  query.send(function (response) {
+    if (response.isError()) {
+      console.error('Error in query: ' + response.getMessage());
+      return;
+    }
+  
+    data = response.getDataTable();
+  
+    view = new google.visualization.DataView(data);
+    view.setColumns([
+      2, // X
+      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
+    ]);
+  });
 
   //alert('dataview done')
 
@@ -88,7 +107,6 @@ function loadTable(key) {
     `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
 
-
   query.send(function (response) {
     if (response.isError()) {
       console.error('Error in query: ' + response.getMessage());
@@ -96,8 +114,6 @@ function loadTable(key) {
     }
   
     data = response.getDataTable();
-    // ✅ 檢查是否成功讀取資料
-    console.log(data.toJSON());
   
     view = new google.visualization.DataView(data);
     view.setColumns([
@@ -108,6 +124,7 @@ function loadTable(key) {
     ]);
   });
 }
+
 
 
 
