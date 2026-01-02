@@ -13,10 +13,10 @@ let view;
 let options;
 
 function init() {
-  alert(dataset['none'])
+  //alert(dataset['none'])
   loadTable('none')
 
-  //alert('check')
+  alert('dataview done')
 
   options = {
     title: 'DPS-射程 比較表',
@@ -103,6 +103,7 @@ query.send(function (response) {
     ]);
   });
 }
+
 
 
 
