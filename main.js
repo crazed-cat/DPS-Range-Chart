@@ -82,7 +82,7 @@ function applyFilter() {
 
 function loadTable(key) {
   const query = new google.visualization.Query(
-    `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${dataset[key]}`
+    `https://docs.google.com/spreadsheets/d/e/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/pubhtml?gid=${dataset[key]}`
   );
 
 
