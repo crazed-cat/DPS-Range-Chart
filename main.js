@@ -13,10 +13,6 @@ let view;
 let options;
 
 function init() {
-  loadTable('none')
-
-  //alert('check')
-
   options = {
     title: 'DPS-射程 比較表',
     hAxis: { title: '射程(接觸點)' },
@@ -55,8 +51,8 @@ function init() {
       applyFilter();
       chart.draw(view, options);
     })
-
-  chart.draw(view, options);
+  
+  loadTable('none')
 }
 
 function toggleLogScale() {
@@ -76,7 +72,7 @@ function applyFilter() {
       rows.push(i);
     }
   }
-
+  
   view.setRows(rows);
 }
 
@@ -91,6 +87,7 @@ query.send(function (response) {
       console.error('Error in query: ' + response.getMessage());
       return;
     }
+  
     data = response.getDataTable();
     view = new google.visualization.DataView(data);
     view.setColumns([
@@ -99,8 +96,12 @@ query.send(function (response) {
       4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
       5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
+  
+    applyFilter();
+    chart.draw(view, options);
   });
 }
+
 
 
 
