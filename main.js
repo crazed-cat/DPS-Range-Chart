@@ -84,12 +84,6 @@ function loadTable(key) {
   const query = new google.visualization.Query(
     `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${dataset[key]}`
   );
-
-  query.send(function (response) {
-    if (response.isError()) {
-      console.error(response.getMessage());
-      return;
-    }
   
     data = response.getDataTable();
     view = new google.visualization.DataView(data);
@@ -99,7 +93,7 @@ function loadTable(key) {
       4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
       5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
-  });
 }
+
 
 
