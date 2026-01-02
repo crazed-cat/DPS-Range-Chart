@@ -16,7 +16,7 @@ function init() {
   //alert(dataset['none'])
   loadTable('none')
 
-  alert('dataview done')
+  //alert('dataview done')
 
   options = {
     title: 'DPS-射程 比較表',
@@ -83,7 +83,7 @@ function applyFilter() {
 
 function loadTable(key) {
   const query = new google.visualization.Query(
-    `https://docs.google.com/spreadsheets/d/e/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/pubhtml?gid=${dataset[key]}`
+    `https://docs.google.com/spreadsheets/d/e/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
 
 
@@ -103,6 +103,7 @@ query.send(function (response) {
     ]);
   });
 }
+
 
 
 
