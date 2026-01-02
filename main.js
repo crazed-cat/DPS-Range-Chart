@@ -87,9 +87,13 @@ function loadTable() {
   options.vAxis.logScale =
     document.getElementById('logToggle').checked;
   
+  options.vAxis.minValue=document.getElementById('logToggle').checked
+  ? 1000:0; 
+  
   chart.draw(view, options);
   });
 }
+
 
 
 
