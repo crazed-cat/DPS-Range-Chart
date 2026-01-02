@@ -87,13 +87,16 @@ function loadTable(key) {
   );
 
 
-query.send(function (response) {
+  query.send(function (response) {
     if (response.isError()) {
       console.error('Error in query: ' + response.getMessage());
       return;
     }
   
     data = response.getDataTable();
+    // ✅ 檢查是否成功讀取資料
+    console.log(data.toJSON());
+  
     view = new google.visualization.DataView(data);
     view.setColumns([
       2, // X
