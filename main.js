@@ -19,7 +19,7 @@ function init() {
     title: 'DPS-射程 比較表',
     hAxis: { title: '射程(接觸點)' },
     vAxis: { title: 'DPS(秒平均輸出)', logScale:'false' },
-    legend: { position: 'right' },
+    legend: { position: 'top' },
     height: 700,
     explorer: {
       actions: ['scrollToZoom', 'dragToPan', 'rightClickToReset'],
@@ -87,12 +87,10 @@ function loadTable() {
   options.vAxis.logScale =
     document.getElementById('logToggle').checked;
   
-  options.vAxis.minValue=document.getElementById('logToggle').checked
-  ? 1000:0; 
-  
   chart.draw(view, options);
   });
 }
+
 
 
 
