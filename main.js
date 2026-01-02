@@ -56,7 +56,8 @@ function init() {
       applyFilter();
       chart.draw(view, options);
     })
-
+  
+  applyFilter();
   chart.draw(view, options);
 }
 
@@ -106,6 +107,7 @@ function loadTable(key) {
     ]);
   });
 }
+
 
 
 
