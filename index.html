@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>DPS-射程 比較表 (Local ver)</title>
+
+  <!-- Google Charts -->
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <label>
+  針對屬性：
+  <select id="traitSelector">
+    <option value="none">不指定</option>
+    <option value="red">紅色敵人</option>
+    <option value="float">漂浮敵人</option>
+    <option value="black">黑色敵人</option>
+    <option value="angle">天使敵人</option>
+    <option value="alien">異星戰士</option>
+    <option value="zombie">不死生物</option>
+    <option value="relic">古代種</option>
+    <option value="aku">惡魔</option>
+    <option value="traitless">無屬性敵人</option>
+  </select>
+  </label>
+
+  <label>
+    <input type="checkbox" id="logToggle">對數座標
+  </label>
+  <label>
+    <input type="checkbox" id="metaOnly">隱藏數值過低的角色
+  </label>
+
+  <div id="chart_div" style="width:700px; height:900px;"></div>
+
+</body>
+</html>
