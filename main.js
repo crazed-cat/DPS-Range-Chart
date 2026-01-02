@@ -56,7 +56,8 @@ function init() {
       applyFilter();
       chart.draw(view, options);
     })
-  
+
+  alert(view)
   applyFilter();
   chart.draw(view, options);
 }
