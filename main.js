@@ -83,7 +83,7 @@ function applyFilter() {
 
 function loadTable(key) {
   const query = new google.visualization.Query(
-    `https://docs.google.com/spreadsheets/d/e/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
+    `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
 
 
@@ -103,6 +103,7 @@ query.send(function (response) {
     ]);
   });
 }
+
 
 
 
