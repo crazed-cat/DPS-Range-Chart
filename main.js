@@ -70,14 +70,14 @@ function init() {
   document
     .getElementById('traitSelector')
     .addEventListener('change',function(){
-      alert(this.value)
+      //alert(this.value)
       loadTable(this.value)
       applyFilter();
       chart.draw(view, options);
     })
 
+  
   alert('about to draw chart')
-  applyFilter();
   chart.draw(view, options);
 }
 
@@ -124,6 +124,7 @@ function loadTable(key) {
     ]);
   });
 }
+
 
 
 
