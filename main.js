@@ -51,7 +51,7 @@ function init() {
 
 function loadTable() {
   const key =  document.getElementById('traitSelector').value
-  alert(key);
+  alert(key)
   const query = new google.visualization.Query(
     `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
@@ -71,7 +71,7 @@ function loadTable() {
       4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
       5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
-  alert('view ready');
+  alert('view ready')
   filter=document.getElementById('metaOnly').checked
   ? 1:0;
   const rows = [];
@@ -90,6 +90,7 @@ function loadTable() {
   chart.draw(view, options);
   });
 }
+
 
 
 
