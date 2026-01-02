@@ -2,7 +2,7 @@ google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(init);
 
 // 改為引入外部資料
-const datasets = {
+const dataset = {
   none: '0', red: '1438024126', float: '545386183', black: '1326931744', angle: '265711189',
   alien: '1362318074', zombie:'205622714', relic: '2039091253', aku: '2140034265', traitless: '1738351081'
 };
@@ -82,7 +82,7 @@ function applyFilter() {
 
 function loadTable(key) {
   const query = new google.visualization.Query(
-    `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${sheetMap[key]}`
+    `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${dataset[key]}`
   );
 
   query.send(function (response) {
@@ -101,3 +101,4 @@ function loadTable(key) {
     ]);
   });
 }
+
