@@ -13,28 +13,6 @@ let view;
 let options;
 
 function init() {
-  //alert(dataset['none'])
-  const query = new google.visualization.Query(
-    `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=0`
-  );
-  
-  query.send(function (response) {
-    if (response.isError()) {
-      console.error('Error in query: ' + response.getMessage());
-      return;
-    }
-  
-    data = response.getDataTable();
-  
-    view = new google.visualization.DataView(data);
-    view.setColumns([
-      2, // X
-      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
-      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
-      5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
-    ]);
-  });
-
   //alert('dataview done')
 
   options = {
@@ -58,51 +36,21 @@ function init() {
   // UI 綁定
   document
     .getElementById('logToggle')
-    .addEventListener('change', toggleLogScale);
+    .addEventListener('change', loadTable());
 
   document
     .getElementById('metaOnly')
-    .addEventListener('change', function(){
-      applyFilter();
-      chart.draw(view, options);
-    })
+    .addEventListener('change', loadTable())
 
   document
     .getElementById('traitSelector')
-    .addEventListener('change',function(){
-      //alert(this.value)
-      loadTable(this.value)
-      applyFilter();
-      chart.draw(view, options);
-    })
-
-  
-  alert('about to draw chart')
-  chart.draw(view, options);
+    .addEventListener('change',loadTable())
+ 
+  loadTable()
 }
 
-function toggleLogScale() {
-  options.vAxis.logScale =
-    document.getElementById('logToggle').checked;
-  
-  chart.draw(view, options);
-}
-
-function applyFilter() {
-  filter=document.getElementById('metaOnly').checked
-  ? 1:0;
-  const rows = [];
-
-  for (let i = 0; i < data.getNumberOfRows(); i++) {
-    if (data.getValue(i, 6) >= filter) {
-      rows.push(i);
-    }
-  }
-  
-  view.setRows(rows);
-}
-
-function loadTable(key) {
+function loadTable() {
+  const key =  document.getElementById('traitSelector').value
   const query = new google.visualization.Query(
     `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
@@ -122,8 +70,26 @@ function loadTable(key) {
       4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
       5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
+  
+  filter=document.getElementById('metaOnly').checked
+  ? 1:0;
+  const rows = [];
+
+  for (let i = 0; i < data.getNumberOfRows(); i++) {
+    if (data.getValue(i, 6) >= filter) {
+      rows.push(i);
+    }
+  }
+  
+  view.setRows(rows);
+  
+  options.vAxis.logScale =
+    document.getElementById('logToggle').checked;
+  
+  chart.draw(view, options);
   });
 }
+
 
 
 
