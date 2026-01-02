@@ -77,7 +77,7 @@ function applyFilter() {
       rows.push(i);
     }
   }
-  
+  alert(view)
   view.setRows(rows);
 }
 
@@ -106,6 +106,7 @@ function loadTable(key) {
     ]);
   });
 }
+
 
 
 
