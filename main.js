@@ -102,3 +102,68 @@ function loadTable(key) {
   });
 }
 
+const minSlider = document.getElementById('min-slider');
+const maxSlider = document.getElementById('max-slider');
+const track = document.getElementById('track');
+const rangeText = document.getElementById('range-text');
+    
+// 定義最小間隔距離
+const minGap = 30;
+
+// 核心邏輯：更新軌道顏色與文字
+function updateSlider() {
+  let minVal = parseInt(minSlider.value);
+  let maxVal = parseInt(maxSlider.value);
+
+  // 【新增限制】：檢查兩者間隔是否小於 minGap
+  if (maxVal - minVal < minGap) {
+    // 如果是左邊滑塊在動，就把左邊卡在「右邊 - 間隔」的位置
+    if (this === minSlider) {
+      minSlider.value = maxVal - minGap;
+      minVal = maxVal - minGap;
+    } 
+    // 如果是右邊滑塊在動，就把右邊卡在「左邊 + 間隔」的位置
+    else {
+      maxSlider.value = minVal + minGap;
+      maxVal = minVal + minGap;
+    }
+  }
+
+  // 計算百分比來渲染選取區間的綠色線條 (1-100範圍)
+  const percent1 = ((minVal - 0) / (330 - 0)) * 100;
+  const percent2 = ((maxVal - 0) / (330 - 0)) * 100;
+
+  // 利用 CSS 漸層動態畫出綠色區間
+  track.style.background = `linear-gradient(to right, #ddd ${percent1}%, #4CAF50 ${percent1}%, #4CAF50 ${percent2}%, #ddd ${percent2}%)`;
+
+  // 更新文字顯示
+  rangeText.textContent = `${minVal} ~ ${maxVal}`;
+}
+
+// 動態調整 z-index 防止重疊卡死
+function handleZIndex(e) {
+  let minVal = parseInt(minSlider.value);
+  let maxVal = parseInt(maxSlider.value);
+
+  // 一般狀況，誰被點擊就把誰放到最上層    
+  if (e.target === minSlider) {
+    minSlider.style.zIndex = "6";
+    maxSlider.style.zIndex = "5";
+  } else {
+    minSlider.style.zIndex = "5";
+    maxSlider.style.zIndex = "6";
+  }
+}
+
+// 監聽滑動事件
+minSlider.addEventListener('input', updateSlider);
+maxSlider.addEventListener('input', updateSlider);
+
+// 監聽滑鼠按下與觸控事件，提早切換 z-index 層級
+minSlider.addEventListener('mousedown', handleZIndex);
+maxSlider.addEventListener('mousedown', handleZIndex);
+minSlider.addEventListener('touchstart', handleZIndex);
+maxSlider.addEventListener('touchstart', handleZIndex);
+
+// 網頁載入時先執行一次初始化外觀
+updateSlider();
