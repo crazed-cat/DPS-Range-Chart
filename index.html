@@ -10,6 +10,100 @@
   <script defer src="main.js"></script>
 </head>
 <body>
+  <style>
+    :root {
+      --slider-color: #ddd;
+      --range-color: #43cf30;
+      --thumb-color: #2ba4fb;
+    }
+
+    /* 全域重設，確保寬度計算精準 */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 300px;
+      height: 40px;
+      margin: 0px auto;
+    }
+
+    /* 自訂底色與選取區間的軌道 */
+    .slider-track {
+      position: absolute;
+      width: 100%;
+      height: 6px;
+      background-color: var(--slider-color);
+      border-radius: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    /* 隱藏原生滑桿的軌道，只保留滑塊 */
+    .slider-container input[type="range"] {
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+      background: transparent;
+      -webkit-appearance: none;
+      appearance: none;
+      pointer-events: none; /* 讓點擊事件可以穿透軌道 */
+      outline: none;
+    }
+
+    #min-slider{z-index: 5;}
+    #max-slider{z-index: 6;}
+
+    /* Webkit 瀏覽器 (Chrome, Safari, Edge) 滑塊 */
+    .slider-container input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      pointer-events: auto; /* 恢復滑塊本身的點擊與拖曳 */
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--thumb-color);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  
+      position: relative;
+    }
+
+    /* Firefox 瀏覽器滑塊 */
+    .slider-container input[type="range"]::-moz-range-thumb {
+      pointer-events: auto;
+      width: 10px;
+      height: 10px;
+      border: none;
+      border-radius: 50%;
+      background: var(--thumb-color);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+      position: relative;
+    }
+
+    /* 移除 Firefox 預設的軌道樣式 */
+    .slider-container input[type="range"]::-moz-range-track {
+      background: transparent;
+      border: none;
+    }
+
+    /* 數值顯示 */
+    .values {
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 16px;
+      margin-top: 0px;
+    }
+  </style>
+
   <label>
   針對屬性：
   <select id="traitSelector">
@@ -27,14 +121,31 @@
   </label>
 
   <label>
-    <input type="checkbox" id="logToggle">使用對數座標
+    <input type="checkbox" id="logToggle">對數座標
   </label>
   <label>
-    <input type="checkbox" id="metaOnly">隱藏數值較低的角色
+    <input type="checkbox" id="metaOnly">僅顯示常見角色
   </label>
+
+  <div>
+    <div class="slider-container">
+      <!-- 自訂的軌道背景 -->
+      <div class="slider-track" id="track"></div>
+
+      <!-- 兩個相互重疊的滑桿 -->
+      <input type="range" id="min-slider" min="0" max="330" value="0">
+      <input type="range" id="max-slider" min="0" max="330" value="330">
+    </div>
+
+    <!-- 顯示目前的區間數值 -->
+    <div class="values">
+      冷卻篩選範圍：<span id="range-text">0 ~ 330</span>秒
+    </div>
+  </div>
+
+  
 
   <div id="chart_div" style="width:700px; height:900px;"></div>
 
 </body>
-
 </html>
