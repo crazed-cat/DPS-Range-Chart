@@ -12,17 +12,19 @@ let data;
 let view;
 let options;
 
+const minSlider = document.getElementById('min-slider');
+const maxSlider = document.getElementById('max-slider');
+const track = document.getElementById('track');
+const rangeText = document.getElementById('range-text');
+
+const minGap = 30;
+
 function init() {
-  loadTable('none')
-
-  //alert('check')
-
   options = {
     title: 'DPS-射程 比較表',
     hAxis: { title: '射程(接觸點)' },
     vAxis: { title: 'DPS(秒平均輸出)', logScale:'false' },
-    legend: { position: 'right' },
-    height: 700,
+    legend: { position: 'top' },
     explorer: {
       actions: ['scrollToZoom', 'dragToPan', 'rightClickToReset'],
       axis: 'both',
@@ -38,36 +40,18 @@ function init() {
   // UI 綁定
   document
     .getElementById('logToggle')
-    .addEventListener('change', toggleLogScale);
+    .addEventListener('change', loadTable);
 
   document
     .getElementById('metaOnly')
-    .addEventListener('change', function(){
-      applyFilter();
-      chart.draw(view, options);
-    })
+    .addEventListener('change', loadTable);
 
   document
     .getElementById('traitSelector')
-    .addEventListener('change',function(){
-      loadTable(this.value);
-      applyFilter();
-      chart.draw(view, options);
-    })
+    .addEventListener('change',loadTable);
 
-  document
-    .getElementByI('min-slider')
-    .addEventListener('change', function(){
-      applyFilter();
-      chart.draw(view, options);
-    })
-
-  document
-    .getElementByI('max-slider')
-    .addEventListener('change', function(){
-      applyFilter();
-      chart.draw(view, options);
-    })
+  minSlider.addEventListener('change', loadTable);
+  maxSlider.addEventListener('change', loadTable);
 
   // 監聽滑動事件
   minSlider.addEventListener('input', updateSlider);
@@ -75,46 +59,25 @@ function init() {
   
   // 網頁載入時先執行一次初始化外觀
   updateSlider();
-
-  chart.draw(view, options);
+ 
+  loadTable()
 }
 
-function toggleLogScale() {
-  options.vAxis.logScale =
-    document.getElementById('logToggle').checked;
-  
-  chart.draw(view, options);
-}
+function loadTable() {
+  const key =  document.getElementById('traitSelector').value
 
-function applyFilter() {
-  filter=document.getElementById('metaOnly').checked
-  ? 1:0;
-  const rows = [];
-  let minCD=document.getElementById('min-slider').value;
-  let maxCD=document.getElementById('max-slider').value;
-  
-  for (let i = 0; i < data.getNumberOfRows(); i++) {
-    if (data.getValue(i, 6) >= filter && data.getValue(i,7)>minCD*30 && data.getValue(i,7)<maxCD*30) {
-      rows.push(i);
-    }
-  }
-
-  view.setRows(rows);
-}
-
-//抓對應屬性的資料
-function loadTable(key) {
   const query = new google.visualization.Query(
-    `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${dataset[key]}`
+    `https://docs.google.com/spreadsheets/d/1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w/gviz/tq?gid=${dataset[key]}`
   );
 
   query.send(function (response) {
     if (response.isError()) {
-      console.error(response.getMessage());
+      console.error('Error in query: ' + response.getMessage());
       return;
     }
   
     data = response.getDataTable();
+  
     view = new google.visualization.DataView(data);
     view.setColumns([
       2, // X
@@ -122,18 +85,26 @@ function loadTable(key) {
       4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
       5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
+
+  filter=document.getElementById('metaOnly').checked
+  ? 1:0;
+  const rows = [];
+
+  for (let i = 0; i < data.getNumberOfRows(); i++) {
+    if (data.getValue(i, 6) >= filter && data.getValue(i, 7)>minSlider.value*30 && data.getValue(i, 7)<maxSlider.value*30) {
+      rows.push(i);
+    }
+  }
+  
+  view.setRows(rows);
+  
+  options.vAxis.logScale =
+    document.getElementById('logToggle').checked;
+  
+  chart.draw(view, options);
   });
 }
 
-//以下用來調整冷卻篩選器
-const minSlider = document.getElementById('min-slider');
-const maxSlider = document.getElementById('max-slider');
-const track = document.getElementById('track');
-const rangeText = document.getElementById('range-text');
-
-const minGap = 30;
-
-// 核心邏輯：更新軌道顏色與文字
 function updateSlider() {
   let minVal = parseInt(minSlider.value);
   let maxVal = parseInt(maxSlider.value);
@@ -161,4 +132,5 @@ function updateSlider() {
 
   // 更新文字顯示
   rangeText.textContent = `${minVal} ~ ${maxVal}`;
+  console.log('slider updated')
 }
