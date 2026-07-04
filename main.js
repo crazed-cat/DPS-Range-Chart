@@ -50,8 +50,21 @@ function init() {
   document
     .getElementById('traitSelector')
     .addEventListener('change',function(){
-      //alert(this.value)
-      loadTable(this.value)
+      loadTable(this.value);
+      applyFilter();
+      chart.draw(view, options);
+    })
+
+  document
+    .getElementByI('min-slider')
+    .addEventListener('change', function(){
+      applyFilter();
+      chart.draw(view, options);
+    })
+
+  document
+    .getElementByI('max-slider')
+    .addEventListener('change', function(){
       applyFilter();
       chart.draw(view, options);
     })
@@ -70,9 +83,11 @@ function applyFilter() {
   filter=document.getElementById('metaOnly').checked
   ? 1:0;
   const rows = [];
-
+  let minCD=document.getElementById('min-slider').value;
+  let maxCD=document.getElementById('max-slider').value;
+  
   for (let i = 0; i < data.getNumberOfRows(); i++) {
-    if (data.getValue(i, 5) >= filter) {
+    if (data.getValue(i, 6) >= filter && data.getValue(i,7)>minCD*30 && data.getValue(i,7)<maxCD*30) {
       rows.push(i);
     }
   }
@@ -80,6 +95,7 @@ function applyFilter() {
   view.setRows(rows);
 }
 
+//抓對應屬性的資料
 function loadTable(key) {
   const query = new google.visualization.Query(
     `1A6OllbUHCiVlk_gbyYRW2JkNIGpuqvv8oRGsTT-Nh0w?gid=${dataset[key]}`
@@ -94,20 +110,20 @@ function loadTable(key) {
     data = response.getDataTable();
     view = new google.visualization.DataView(data);
     view.setColumns([
-      1, // X
-      2, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` },
-      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` },
-      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,0)}` }
+      2, // X
+      3, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      4, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` },
+      5, { type: 'string', role: 'tooltip', calc: (dt, row) => `${dt.getValue(row,1)}` }
     ]);
   });
 }
 
+//以下用來調整冷卻篩選器
 const minSlider = document.getElementById('min-slider');
 const maxSlider = document.getElementById('max-slider');
 const track = document.getElementById('track');
 const rangeText = document.getElementById('range-text');
-    
-// 定義最小間隔距離
+
 const minGap = 30;
 
 // 核心邏輯：更新軌道顏色與文字
