@@ -145,7 +145,17 @@
 
   
 
-  <div id="chart_div" style="width:700px; height:900px;"></div>
+  <div id="chart_div" style="width:min(600px, 90vw); height:min(400px, 70svh);"></div>
+
+  <p>
+  每個點代表一隻角色，
+  使用滑鼠滾輪可以縮放，
+  右鍵可重置縮放倍率
+  <br>
+  會升攻的貓以升攻前後加權平均計算，
+  權重正比於攻擊力*對應KB數，
+  其中死前存活會視為0.5個KB(KB線和升攻線不同的會手動微調)
+  </p>
 
 </body>
 </html>
